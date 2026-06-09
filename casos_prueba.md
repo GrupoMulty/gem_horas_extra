@@ -3,10 +3,13 @@
 Ejemplos de referencia para validar respuestas del Gem.  
 Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 
+Parámetros: SMLV **$1.750.905**, jornada **42 h/semana**, divisor **210 h/mes**.
+
 > Escenarios avanzados con entradas reales de usuario → ver `ejemplos_complejos.md`
+
 ---
 
-## Caso 1 — Karen (sin recargos)
+## Caso 1 — Karen (casi sin recargos)
 
 **Empleado:** Karen  
 **Horario:** Lunes a Viernes, 07:00 - 17:00  
@@ -17,16 +20,17 @@ Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 - Horas efectivas: **8,75**
 - Clasificación: 8,75 h diurnas, 0 h nocturnas
 
-### Recargos semanales
+### Semana
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno | 0 | $0 |
-| Extras | 0 | $0 |
-| Dominical/festivo | 0 | $0 |
-| **Recargos sin prestaciones** | | **$0** |
-| Prestaciones (42%) | | $0 |
-| **Total con prestaciones** | | **$0** |
+| Horas semanales | 43,75 | |
+| Horas extra diurnas (vie) | 1,75 | $18.239 |
+| **Recargos sin prestaciones** | | **$18.239** |
+| Prestaciones (42%) | | $7.660 |
+| **Total con prestaciones** | | **$25.899** |
+
+> Con 42 h semanales, el viernes genera 1,75 h extra diurna.
 
 ---
 
@@ -41,10 +45,10 @@ Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Horas semanales | 48,75 | |
-| Horas extra diurnas | 4,75 | $47.230 |
-| **Recargos sin prestaciones** | | **$47.230** |
-| Prestaciones (42%) | | $19.837 |
-| **Total con prestaciones** | | **$67.067** |
+| Horas extra diurnas | 6,75 | $70.349 |
+| **Recargos sin prestaciones** | | **$70.349** |
+| Prestaciones (42%) | | $29.547 |
+| **Total con prestaciones** | | **$99.896** |
 
 ---
 
@@ -64,16 +68,16 @@ Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Horas semanales | 40,00 | |
-| Horas ordinarias nocturnas | 40,00 | $429.545 |
-| **Recargos sin prestaciones** | | **$429.545** |
-| Prestaciones (42%) | | $180.409 |
-| **Total con prestaciones** | | **$609.954** |
+| Horas ordinarias nocturnas | 40,00 | $450.233 |
+| **Recargos sin prestaciones** | | **$450.233** |
+| Prestaciones (42%) | | $189.098 |
+| **Total con prestaciones** | | **$639.331** |
 
 ### Validaciones
 
 - Salida 06:00 = día siguiente.
-- Toda la jornada es franja nocturna.
-- Tarifa: $7.954,55 × 1,35 = $10.738,64/h.
+- Toda la jornada es franja nocturna (19:00–06:00).
+- Tarifa: $8.338 × 1,35 = $11.256/h.
 
 ---
 
@@ -88,34 +92,32 @@ Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Horas semanales | 52,50 | |
-| Horas dominicales (dentro de 44 h) | 0,25 | $3.480 |
-| Horas extra dominicales | 8,50 | $135.227 |
-| **Recargos sin prestaciones** | | **$138.707** |
-| Prestaciones (42%) | | $58.257 |
-| **Total con prestaciones** | | **$196.964** |
+| Horas extra diurnas (vie) | 1,75 | $18.239 |
+| Horas extra dominicales diurnas (dom) | 8,75 | $156.852 |
+| **Recargos sin prestaciones** | | **$175.091** |
+| Prestaciones (42%) | | $73.538 |
+| **Total con prestaciones** | | **$248.629** |
 
-> Lun-vie acumulan 43,75 h. Del domingo: 0,25 h completan las 44 h (dominical); 8,50 h restantes son extra dominical.
+> Lun-vie acumulan 43,75 h → 42 h ordinarias + 1,75 h extra diurna el viernes. Domingo completo (8,75 h) es extra dominical diurna.
 
 ---
 
 ## Caso 5 — Carlos (festivo 20 de julio)
 
 **Empleado:** Carlos  
-**Horario:** Lunes 07:00-17:00 (14 jul) + Martes 07:00-17:00 (15 jul) + Festivo 07:00-15:00 (20 jul, Independencia)  
+**Horario:** Lunes 07:00-17:00 + Martes 07:00-17:00 + Festivo 07:00-15:00 (20 jul)  
 **Descansos:** 15 min desayuno + 60 min almuerzo  
-**Salario:** SMLV $1.750.000
+**Salario:** SMLV $1.750.905
 
 ### Semana parcial (3 días)
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Horas efectivas totales | 24,25 | |
-| Horas dominicales/festivas (20 jul, dentro de 44 h) | 6,75 | $93.963 |
-| **Recargos sin prestaciones** | | **$93.963** |
-| Prestaciones (42%) | | $39.464 |
-| **Total con prestaciones** | | **$133.427** |
-
-> El 20 de julio está en `festivos_colombia_2026.md`. No hay extras porque no supera 44 h.
+| Horas dominicales/festivas (20 jul) | 6,75 | $106.930 |
+| **Recargos sin prestaciones** | | **$106.930** |
+| Prestaciones (42%) | | $44.911 |
+| **Total con prestaciones** | | **$151.841** |
 
 ---
 
@@ -126,22 +128,23 @@ Todos los valores son **recargos** (no incluyen salario base ordinario diurno).
 **Horario:** Lunes a Viernes, 07:00 - 18:00  
 **Descansos:** Desayuno 15 min, Almuerzo 60 min
 
-### Tarifas derivadas
+### Tarifas derivadas ($3.500.000 ÷ 210)
 
 | Tipo | COP |
 |------|-----|
-| Ordinaria | $15.909,09 |
-| Ordinaria nocturna (+35%) | $21.477,27 |
-| Extra diurna (+25%) | $19.886,36 |
-| Extra nocturna (+75%) | $27.840,91 |
-| Dominical (+75%) | $27.840,91 |
-| Extra dominical (+100%) | $31.818,18 |
+| Ordinaria | $16.667 |
+| Ordinaria nocturna (+35%) | $22.500 |
+| Extra diurna (+25%) | $20.833 |
+| Extra nocturna (+75%) | $29.167 |
+| Dominical (+90%) | $31.667 |
+| Extra dominical diurna (+115%) | $35.833 |
+| Extra dominical nocturna (+165%) | $44.167 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Horas extra diurnas | 4,75 | $94.460 |
-| **Recargos sin prestaciones** | | **$94.460** |
-| Prestaciones (42%) | | $39.673 |
-| **Total con prestaciones** | | **$134.133** |
+| Horas extra diurnas | 6,75 | $140.625 |
+| **Recargos sin prestaciones** | | **$140.625** |
+| Prestaciones (42%) | | $59.062 |
+| **Total con prestaciones** | | **$199.687** |

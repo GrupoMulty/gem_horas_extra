@@ -25,18 +25,18 @@ No incluye salario base, auxilio de transporte ni deducciones.
 
 ## Parámetros base 2026
 
-- Salario mínimo: $1.750.000 COP
-- Jornada semanal: 44 horas
-- Jornada mensual: 220 horas
-- Valor hora ordinaria (SMLV): $7.954,55 COP
+- Salario mínimo: $1.750.905 COP
+- Jornada semanal: **42 horas**
+- Jornada mensual: **210 horas**
+- Valor hora ordinaria (SMLV): **$8.338 COP**
 
 ## Flujo de cálculo
 
 1. Recibir horarios, descansos y salario del empleado.
 2. Calcular horas efectivas (con cruce de medianoche si aplica).
-3. Clasificar en diurna / nocturna.
+3. Clasificar en diurna (06:00–19:00) / nocturna (19:00–06:00).
 4. Identificar domingos y festivos.
-5. Acumular semana y separar ordinarias (44 h) de extras.
+5. Acumular semana y separar ordinarias (42 h) de extras.
 6. Liquidar recargos según tipo.
 7. Aplicar prestacional (42%) y presentar desglose.
 
@@ -49,13 +49,13 @@ No incluye salario base, auxilio de transporte ni deducciones.
 ## Verificar cálculos
 
 ```bash
-python -c "from calculos import *; print(calcular_horas_efectivas(7, 17, 15, 60))"
+python -c "from calculos import *; print(calcular_tarifas().hora_ordinaria)"
 ```
 
-Debe retornar `8.75`.
+Debe retornar `8337.64...` (≈ $8.338).
 
 ```bash
 python -c "from calculos import *; j=[Jornada(21,6,0,60) for _ in range(5)]; print(liquidar_semana(j).valor_recargos)"
 ```
 
-Debe retornar `429545` (recargo nocturno Pedro).
+Debe retornar `450233` (recargo nocturno Pedro).

@@ -3,7 +3,7 @@
 Escenarios realistas para entrenar y validar el Gem. Cada ejemplo incluye el **mensaje del usuario** (informal, incompleto o ambiguo), lo que el Gem debe **interpretar**, y el **resultado validado**.
 
 Todos los valores son **recargos** (sin salario base ordinario diurno).  
-Salario por defecto: **SMLV $1.750.000** si el usuario no indica otro.
+Salario por defecto: **SMLV $1.750.905** | Jornada **42 h/semana** | Divisor **210 h/mes**.
 
 ---
 
@@ -23,7 +23,7 @@ gana el minimo
 | Campo | Valor |
 |-------|-------|
 | Empleado | Andrés |
-| Salario | $1.750.000 (SMLV) |
+| Salario | $1.750.905 (SMLV) |
 | Horario | Lun–Vie 18:00 – 02:00 |
 | Desayuno | 15 min |
 | Almuerzo | 60 min |
@@ -33,18 +33,18 @@ gana el minimo
 
 | Día | Efectivas | Diurnas | Nocturnas |
 |-----|-----------|---------|-----------|
-| Lun–Vie (×5) | 6,75 c/u | 2,55 | 4,20 |
+| Lun–Vie (×5) | 6,75 c/u | 0,86 | 5,89 |
 
-> Franja diurna 18:00–21:00 (3 h) + nocturna 21:00–02:00 (5 h bruto). Descansos repartidos proporcionalmente.
+> Franja diurna 18:00–19:00 (1 h) + nocturna 19:00–02:00 (7 h bruto). Descansos repartidos proporcionalmente.
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno (ordinarias) | 21,00 | $225.511 |
-| **Recargos sin prestaciones** | | **$225.511** |
-| Prestaciones (42%) | | $94.715 |
-| **Total con prestaciones** | | **$320.226** |
+| Recargo nocturno (ordinarias) | 29,45 | $331.484 |
+| **Recargos sin prestaciones** | | **$331.484** |
+| Prestaciones (42%) | | $139.223 |
+| **Total con prestaciones** | | **$470.707** |
 
 ---
 
@@ -80,22 +80,22 @@ salario minimo
 | Concepto | Horas |
 |----------|-------|
 | Horas semanales totales | 58,25 |
-| Horas dominicales/festivas (lunes, dentro 44 h) | 8,75 |
-| Horas extra diurnas (sábado) | 5,50 |
-| Horas extra dominicales (domingo) | 8,75 |
+| Horas dominicales/festivas (lunes, dentro 42 h) | 8,75 |
+| Horas extra diurnas | 7,50 |
+| Horas extra dominicales diurnas (domingo) | 8,75 |
 
-> Lun–Vie acumulan 43,75 h. Sábado: 0,25 h completan las 44 h (ordinaria diurna, sin recargo) + 5,50 h extra diurna. Domingo: 8,75 h extra dominical.
+> Lun festivo 8,75 h dominical. Mar–Jue acumulan hasta 35 h. Vie completa 42 h (7 h ordinarias diurnas). Sábado: 5,75 h extra diurna + 1,75 h extra del viernes ya contadas → total extra diurna 7,5 h. Domingo: 8,75 h extra dominical diurna.
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo dominical/festivo (lunes) | 8,75 | $121.804 |
-| Extra diurna (sábado) | 5,50 | $54.688 |
-| Extra dominical (domingo) | 8,75 | $139.205 |
-| **Recargos sin prestaciones** | | **$315.697** |
-| Prestaciones (42%) | | $132.593 |
-| **Total con prestaciones** | | **$448.290** |
+| Recargo dominical/festivo (lunes) | 8,75 | $138.613 |
+| Extra diurna | 7,50 | $78.165 |
+| Extra dominical diurna (domingo) | 8,75 | $156.852 |
+| **Recargos sin prestaciones** | | **$373.630** |
+| Prestaciones (42%) | | $156.925 |
+| **Total con prestaciones** | | **$530.555** |
 
 ---
 
@@ -107,7 +107,7 @@ salario minimo
 para roberto el vigilante:
 lun a vie entra 10pm sale 6am, almuerzo 1h
 el sabado lo llamaron de 10pm a 10am (tambien con 1h almuerzo)
-cuanto le debo de recargos? gana 1.750.000
+cuanto le debo de recargos? gana 1.750.905
 ```
 
 ### Información extraída
@@ -122,20 +122,20 @@ cuanto le debo de recargos? gana 1.750.000
 | Concepto | Horas |
 |----------|-------|
 | Horas semanales | 46,00 |
-| Ordinarias nocturnas | 41,01 |
-| Extra diurna (sábado) | 0,66 |
-| Extra nocturna (sábado) | 1,34 |
+| Ordinarias nocturnas | 39,68 |
+| Extra diurna (sábado) | 1,33 |
+| Extra nocturna (sábado) | 2,67 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno | 41,01 | $440.391 |
-| Extra diurna | 0,66 | $6.562 |
-| Extra nocturna | 1,34 | $18.653 |
-| **Recargos sin prestaciones** | | **$465.606** |
-| Prestaciones (42%) | | $195.555 |
-| **Total con prestaciones** | | **$661.161** |
+| Recargo nocturno | 39,68 | $446.631 |
+| Extra diurna | 1,33 | $13.861 |
+| Extra nocturna | 2,67 | $38.958 |
+| **Recargos sin prestaciones** | | **$499.450** |
+| Prestaciones (42%) | | $209.769 |
+| **Total con prestaciones** | | **$709.219** |
 
 ---
 
@@ -151,7 +151,7 @@ martes a viernes: 7:00 a 17:00
 sabado 18: entro 7am y salio 8pm (desayuno 15min, almuerzo 1h)
 domingo 19: 7:00 a 17:00
 
-salario 1.750.000
+salario 1.750.905
 ```
 
 ### Información extraída
@@ -167,12 +167,13 @@ salario 1.750.000
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo dominical/festivo (lunes) | 8,75 | $121.804 |
-| Extra diurna (sábado) | 11,50 | $114.347 |
-| Extra dominical (domingo) | 8,75 | $139.205 |
-| **Recargos sin prestaciones** | | **$375.356** |
-| Prestaciones (42%) | | $157.650 |
-| **Total con prestaciones** | | **$533.006** |
+| Recargo dominical/festivo (lunes) | 8,75 | $138.613 |
+| Extra diurna (sábado) | 12,60 | $131.318 |
+| Extra nocturna (sábado) | 0,90 | $13.132 |
+| Extra dominical diurna (domingo) | 8,75 | $156.852 |
+| **Recargos sin prestaciones** | | **$439.915** |
+| Prestaciones (42%) | | $184.764 |
+| **Total con prestaciones** | | **$624.679** |
 
 ---
 
@@ -192,18 +193,18 @@ salario minimo, descansos iguales todos los dias
 | Día | Horario | Efectivas | Diurnas | Nocturnas |
 |-----|---------|-----------|---------|-----------|
 | Lun–Jue | 07:00–17:00 | 8,75 | 8,75 | 0,00 |
-| Vie | 06:00–22:00 | 14,75 | 13,83 | 0,92 |
+| Vie | 06:00–22:00 | 14,75 | 11,98 | 2,77 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno (vie, ordinarias) | 0,56 | $6.014 |
-| Extra diurna (vie) | 5,39 | $53.594 |
-| Extra nocturna (vie) | 0,36 | $5.011 |
-| **Recargos sin prestaciones** | | **$64.619** |
-| Prestaciones (42%) | | $27.140 |
-| **Total con prestaciones** | | **$91.759** |
+| Recargo nocturno (vie, ordinarias) | 1,31 | $14.745 |
+| Extra diurna (vie) | 6,29 | $65.555 |
+| Extra nocturna (vie) | 1,46 | $21.303 |
+| **Recargos sin prestaciones** | | **$101.603** |
+| Prestaciones (42%) | | $42.673 |
+| **Total con prestaciones** | | **$144.276** |
 
 ---
 
@@ -218,23 +219,25 @@ turno noche 6pm-2am de lunes a viernes
 el domingo trabajó 7 a 5 (15 min desayuno, 1 hora almuerzo)
 ```
 
-### Tarifas derivadas ($2.800.000 ÷ 220)
+### Tarifas derivadas ($2.800.000 ÷ 210)
 
 | Tipo | COP |
 |------|-----|
-| Ordinaria | $12.727,27 |
-| Ordinaria nocturna (+35%) | $17.181,82 |
-| Dominical (+75%) | $22.272,73 |
+| Ordinaria | $13.333 |
+| Ordinaria nocturna (+35%) | $18.000 |
+| Dominical (+90%) | $25.333 |
+| Extra dominical diurna (+115%) | $28.667 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno (lun–vie) | 21,00 | $360.818 |
-| Recargo dominical (domingo, dentro 44 h) | 8,75 | $194.886 |
-| **Recargos sin prestaciones** | | **$555.704** |
-| Prestaciones (42%) | | $233.396 |
-| **Total con prestaciones** | | **$789.100** |
+| Recargo nocturno (lun–vie) | 29,45 | $530.100 |
+| Recargo dominical (domingo, dentro 42 h) | 8,25 | $209.000 |
+| Extra dominical diurna (domingo) | 0,50 | $14.333 |
+| **Recargos sin prestaciones** | | **$753.433** |
+| Prestaciones (42%) | | $316.442 |
+| **Total con prestaciones** | | **$1.069.875** |
 
 ---
 
@@ -272,22 +275,22 @@ minimo
 | Concepto | Horas |
 |----------|-------|
 | Horas semanales | 56,50 |
-| Recargo festivo (jueves, dentro 44 h) | 10,75 |
-| Recargo festivo (viernes, dentro 44 h) | 7,00 |
-| Extra dominical/festiva (viernes) | 2,75 |
+| Recargo festivo (jueves, dentro 42 h) | 10,75 |
+| Recargo festivo (viernes, dentro 42 h) | 2,50 |
+| Extra dominical/festiva diurna (viernes) | 7,25 |
 | Extra diurna (sábado) | 9,75 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo festivo (jueves santo) | 10,75 | $149.645 |
-| Recargo festivo (viernes santo) | 7,00 | $97.443 |
-| Extra dominical/festiva (viernes) | 2,75 | $43.750 |
-| Extra diurna (sábado) | 9,75 | $96.946 |
-| **Recargos sin prestaciones** | | **$387.784** |
-| Prestaciones (42%) | | $162.869 |
-| **Total con prestaciones** | | **$550.653** |
+| Recargo festivo (jueves santo) | 10,75 | $170.296 |
+| Recargo festivo (viernes santo) | 2,50 | $39.604 |
+| Extra dominical/festiva diurna (viernes) | 7,25 | $129.963 |
+| Extra diurna (sábado) | 9,75 | $101.615 |
+| **Recargos sin prestaciones** | | **$436.267** |
+| Prestaciones (42%) | | $183.232 |
+| **Total con prestaciones** | | **$619.499** |
 
 ---
 
@@ -307,7 +310,7 @@ Para liquidar los recargos de Paola necesito:
 1. Horario exacto de entrada y salida (¿cruza medianoche?)
 2. Qué días trabajó (lun–dom, con fechas si hay festivos)
 3. Minutos de desayuno y almuerzo
-4. Salario mensual (¿SMLV $1.750.000?)
+4. Salario mensual (¿SMLV $1.750.905?)
 ```
 
 ### Turno 2 — Entrada del usuario
@@ -324,20 +327,20 @@ lun a vie 9pm a 6am, almuerzo 60 min sin desayuno, gana 2.100.000
 | Efectivas/día | 8,00 h (todas nocturnas) |
 | Salario | $2.100.000 |
 
-### Tarifas ($2.100.000 ÷ 220)
+### Tarifas ($2.100.000 ÷ 210)
 
 | Tipo | COP |
 |------|-----|
-| Ordinaria nocturna (+35%) | $12.886,36 |
+| Ordinaria nocturna (+35%) | $13.500 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno | 40,00 | $515.455 |
-| **Recargos sin prestaciones** | | **$515.455** |
-| Prestaciones (42%) | | $216.491 |
-| **Total con prestaciones** | | **$731.946** |
+| Recargo nocturno | 40,00 | $540.000 |
+| **Recargos sin prestaciones** | | **$540.000** |
+| Prestaciones (42%) | | $226.800 |
+| **Total con prestaciones** | | **$766.800** |
 
 ---
 
@@ -361,17 +364,17 @@ El Gem debe devolver **dos liquidaciones separadas**, una por empleado.
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Extra diurna | 4,75 | $47.230 |
-| **Recargos sin prestaciones** | | **$47.230** |
-| **Total con prestaciones** | | **$67.067** |
+| Extra diurna | 6,75 | $70.349 |
+| **Recargos sin prestaciones** | | **$70.349** |
+| **Total con prestaciones** | | **$99.896** |
 
 #### Pedro
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo nocturno | 40,00 | $429.545 |
-| **Recargos sin prestaciones** | | **$429.545** |
-| **Total con prestaciones** | | **$609.954** |
+| Recargo nocturno | 40,00 | $450.233 |
+| **Recargos sin prestaciones** | | **$450.233** |
+| **Total con prestaciones** | | **$639.331** |
 
 ---
 
@@ -399,10 +402,10 @@ salario minimo
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Extra diurna | 5,15 | $51.207 |
-| **Recargos sin prestaciones** | | **$51.207** |
-| Prestaciones (42%) | | $21.507 |
-| **Total con prestaciones** | | **$72.714** |
+| Extra diurna | 7,15 | $74.518 |
+| **Recargos sin prestaciones** | | **$74.518** |
+| Prestaciones (42%) | | $31.298 |
+| **Total con prestaciones** | | **$105.816** |
 
 ---
 
@@ -431,10 +434,10 @@ viernes 2 mayo: 7-6pm
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo festivo (1 mayo, dentro 44 h) | 10,75 | $149.645 |
-| Extra diurna (viernes) | 2,75 | $27.344 |
-| **Recargos sin prestaciones** | | **$176.989** |
-| Prestaciones (42%) | | $74.335 |
-| **Total con prestaciones** | | **$251.324** |
+| Recargo festivo (1 mayo, dentro 42 h) | 10,75 | $170.296 |
+| Extra diurna (viernes) | 4,75 | $49.505 |
+| **Recargos sin prestaciones** | | **$219.801** |
+| Prestaciones (42%) | | $92.316 |
+| **Total con prestaciones** | | **$312.117** |
 
-> Lun–Mié = 26,25 h. Jueves festivo 10,75 h → total 37 h. Viernes 9,75 h → 46,75 h. Del viernes: 7 h ordinarias diurnas (sin recargo) + 2,75 h extra diurna.
+> Lun–Mié = 26,25 h. Jueves festivo 10,75 h → total 37 h. Viernes 9,75 h → 46,75 h. Del viernes: 5 h ordinarias diurnas (sin recargo) + 4,75 h extra diurna.

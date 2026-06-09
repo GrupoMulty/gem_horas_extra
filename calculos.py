@@ -2,20 +2,21 @@
 
 from dataclasses import dataclass
 
-JORNADA_SEMANAL = 44
+JORNADA_SEMANAL = 42
 JORNADA_DIURNA_INICIO = 6.0   # 06:00
-JORNADA_DIURNA_FIN = 21.0      # 21:00
+JORNADA_DIURNA_FIN = 19.0      # 19:00 (reforma laboral Ley 2466/2025)
 
-SALARIO_MINIMO = 1_750_000
-JORNADA_MENSUAL = 220
+SALARIO_MINIMO = 1_750_905
+JORNADA_MENSUAL = 210          # 42 h semanales × 5 días / semana
 
 FACTOR_PRESTACIONAL = 0.42
 
 RECARGO_NOCTURNO = 0.35
 RECARGO_EXTRA_DIURNA = 0.25
 RECARGO_EXTRA_NOCTURNA = 0.75
-RECARGO_DOMINICAL = 0.75
-RECARGO_EXTRA_DOMINICAL = 1.00
+RECARGO_DOMINICAL = 0.90
+RECARGO_EXTRA_DOMINICAL_DIURNA = 1.15
+RECARGO_EXTRA_DOMINICAL_NOCTURNA = 1.65
 
 FESTIVOS_2026 = {
     "2026-01-01", "2026-01-12", "2026-03-23", "2026-04-02", "2026-04-03",
@@ -32,7 +33,8 @@ class Tarifas:
     extra_diurna: float
     extra_nocturna: float
     dominical: float
-    extra_dominical: float
+    extra_dominical_diurna: float
+    extra_dominical_nocturna: float
 
 
 @dataclass
@@ -59,12 +61,14 @@ class LiquidacionSemanal:
     horas_extra_diurnas: float
     horas_extra_nocturnas: float
     horas_dominicales: float
-    horas_extra_dominicales: float
+    horas_extra_dominicales_diurnas: float
+    horas_extra_dominicales_nocturnas: float
     valor_recargo_nocturno: int
     valor_extra_diurnas: int
     valor_extra_nocturnas: int
     valor_dominicales: int
-    valor_extra_dominicales: int
+    valor_extra_dominicales_diurnas: int
+    valor_extra_dominicales_nocturnas: int
     valor_recargos: int
     valor_prestaciones: int
     valor_total_con_prestaciones: int
@@ -77,7 +81,7 @@ def es_festivo(fecha: str) -> bool:
 
 
 def calcular_tarifas(salario_mensual: float = SALARIO_MINIMO) -> Tarifas:
-    """Deriva tarifas horarias a partir del salario mensual (÷ 220 h)."""
+    """Deriva tarifas horarias a partir del salario mensual (÷ 210 h)."""
     hora_ordinaria = salario_mensual / JORNADA_MENSUAL
     return Tarifas(
         hora_ordinaria=hora_ordinaria,
@@ -85,7 +89,8 @@ def calcular_tarifas(salario_mensual: float = SALARIO_MINIMO) -> Tarifas:
         extra_diurna=hora_ordinaria * (1 + RECARGO_EXTRA_DIURNA),
         extra_nocturna=hora_ordinaria * (1 + RECARGO_EXTRA_NOCTURNA),
         dominical=hora_ordinaria * (1 + RECARGO_DOMINICAL),
-        extra_dominical=hora_ordinaria * (1 + RECARGO_EXTRA_DOMINICAL),
+        extra_dominical_diurna=hora_ordinaria * (1 + RECARGO_EXTRA_DOMINICAL_DIURNA),
+        extra_dominical_nocturna=hora_ordinaria * (1 + RECARGO_EXTRA_DOMINICAL_NOCTURNA),
     )
 
 
@@ -130,7 +135,7 @@ def clasificar_diurna_nocturna(
     almuerzo_min: int = 0,
 ) -> ClasificacionDia:
     """
-    Reparte horas efectivas entre jornada diurna (06:00-21:00) y nocturna (21:00-06:00).
+    Reparte horas efectivas entre jornada diurna (06:00-19:00) y nocturna (19:00-06:00).
     Solo importa el total de minutos de descanso, no la hora del descanso.
     """
     if salida_horas <= entrada_horas:
@@ -177,7 +182,8 @@ def liquidar_semana(
     horas_extra_diurnas = 0.0
     horas_extra_nocturnas = 0.0
     horas_dominicales = 0.0
-    horas_extra_dominicales = 0.0
+    horas_extra_dominicales_diurnas = 0.0
+    horas_extra_dominicales_nocturnas = 0.0
     horas_ordinarias = 0.0
 
     for jornada in jornadas:
@@ -196,37 +202,50 @@ def liquidar_semana(
         horas_ordinarias += ordinarias_dia
         horas_ordinarias_restantes -= ordinarias_dia
 
+        ratio_diurna = clasificacion.horas_diurnas / horas_dia if horas_dia else 0
+        ratio_nocturna = clasificacion.horas_nocturnas / horas_dia if horas_dia else 0
+
         if jornada.es_dominical_o_festivo:
             horas_dominicales += ordinarias_dia
-            horas_extra_dominicales += extras_dia
+            if extras_dia > 0:
+                horas_extra_dominicales_diurnas += round(extras_dia * ratio_diurna, 2)
+                horas_extra_dominicales_nocturnas += round(extras_dia * ratio_nocturna, 2)
             continue
 
         if ordinarias_dia > 0:
-            ratio_nocturna = clasificacion.horas_nocturnas / horas_dia
             horas_ordinarias_nocturnas += round(ordinarias_dia * ratio_nocturna, 2)
 
         if extras_dia <= 0:
             continue
 
-        ratio_diurna = clasificacion.horas_diurnas / horas_dia
-        ratio_nocturna = clasificacion.horas_nocturnas / horas_dia
         horas_extra_diurnas += round(extras_dia * ratio_diurna, 2)
         horas_extra_nocturnas += round(extras_dia * ratio_nocturna, 2)
 
-    horas_extra = round(horas_extra_diurnas + horas_extra_nocturnas + horas_extra_dominicales, 2)
+    horas_extra_dominicales = round(
+        horas_extra_dominicales_diurnas + horas_extra_dominicales_nocturnas, 2
+    )
+    horas_extra = round(
+        horas_extra_diurnas + horas_extra_nocturnas + horas_extra_dominicales, 2
+    )
 
     valor_recargo_nocturno = round(horas_ordinarias_nocturnas * tarifas.ordinaria_nocturna, 0)
     valor_dominicales = round(horas_dominicales * tarifas.dominical, 0)
     valor_extra_diurnas = round(horas_extra_diurnas * tarifas.extra_diurna, 0)
     valor_extra_nocturnas = round(horas_extra_nocturnas * tarifas.extra_nocturna, 0)
-    valor_extra_dominicales = round(horas_extra_dominicales * tarifas.extra_dominical, 0)
+    valor_extra_dominicales_diurnas = round(
+        horas_extra_dominicales_diurnas * tarifas.extra_dominical_diurna, 0
+    )
+    valor_extra_dominicales_nocturnas = round(
+        horas_extra_dominicales_nocturnas * tarifas.extra_dominical_nocturna, 0
+    )
 
     valor_recargos = (
         valor_recargo_nocturno
         + valor_dominicales
         + valor_extra_diurnas
         + valor_extra_nocturnas
-        + valor_extra_dominicales
+        + valor_extra_dominicales_diurnas
+        + valor_extra_dominicales_nocturnas
     )
     valor_prestaciones = round(valor_recargos * FACTOR_PRESTACIONAL, 0)
     valor_total_con_prestaciones = valor_recargos + valor_prestaciones
@@ -238,12 +257,14 @@ def liquidar_semana(
         horas_extra_diurnas=round(horas_extra_diurnas, 2),
         horas_extra_nocturnas=round(horas_extra_nocturnas, 2),
         horas_dominicales=round(horas_dominicales, 2),
-        horas_extra_dominicales=round(horas_extra_dominicales, 2),
+        horas_extra_dominicales_diurnas=round(horas_extra_dominicales_diurnas, 2),
+        horas_extra_dominicales_nocturnas=round(horas_extra_dominicales_nocturnas, 2),
         valor_recargo_nocturno=valor_recargo_nocturno,
         valor_extra_diurnas=valor_extra_diurnas,
         valor_extra_nocturnas=valor_extra_nocturnas,
         valor_dominicales=valor_dominicales,
-        valor_extra_dominicales=valor_extra_dominicales,
+        valor_extra_dominicales_diurnas=valor_extra_dominicales_diurnas,
+        valor_extra_dominicales_nocturnas=valor_extra_dominicales_nocturnas,
         valor_recargos=valor_recargos,
         valor_prestaciones=valor_prestaciones,
         valor_total_con_prestaciones=valor_total_con_prestaciones,
