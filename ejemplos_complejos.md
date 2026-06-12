@@ -90,12 +90,12 @@ salario minimo
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo dominical/festivo (lunes) | 8,75 | $138.613 |
+| Recargo dominical/festivo (lunes) | 8,75 | $127.670 |
 | Extra diurna | 7,50 | $78.165 |
-| Extra dominical diurna (domingo) | 8,75 | $156.852 |
-| **Recargos sin prestaciones** | | **$373.630** |
-| Prestaciones (42%) | | $156.925 |
-| **Total con prestaciones** | | **$530.555** |
+| Extra dominical diurna (domingo) | 8,75 | $145.909 |
+| **Recargos sin prestaciones** | | **$351.744** |
+| Prestaciones (42%) | | $147.733 |
+| **Total con prestaciones** | | **$499.477** |
 
 ---
 
@@ -167,13 +167,13 @@ salario 1.750.905
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo dominical/festivo (lunes) | 8,75 | $138.613 |
+| Recargo dominical/festivo (lunes) | 8,75 | $127.670 |
 | Extra diurna (sábado) | 12,60 | $131.318 |
 | Extra nocturna (sábado) | 0,90 | $13.132 |
-| Extra dominical diurna (domingo) | 8,75 | $156.852 |
-| **Recargos sin prestaciones** | | **$439.915** |
-| Prestaciones (42%) | | $184.764 |
-| **Total con prestaciones** | | **$624.679** |
+| Extra dominical diurna (domingo) | 8,75 | $145.909 |
+| **Recargos sin prestaciones** | | **$418.029** |
+| Prestaciones (42%) | | $175.572 |
+| **Total con prestaciones** | | **$593.601** |
 
 ---
 
@@ -225,19 +225,19 @@ el domingo trabajó 7 a 5 (15 min desayuno, 1 hora almuerzo)
 |------|-----|
 | Ordinaria | $13.333 |
 | Ordinaria nocturna (+35%) | $18.000 |
-| Dominical (+90%) | $25.333 |
-| Extra dominical diurna (+115%) | $28.667 |
+| Dominical (+75%) | $25.000 |
+| Extra dominical diurna (+100%) | $26.667 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Recargo nocturno (lun–vie) | 29,45 | $530.100 |
-| Recargo dominical (domingo, dentro 42 h) | 8,25 | $209.000 |
-| Extra dominical diurna (domingo) | 0,50 | $14.333 |
-| **Recargos sin prestaciones** | | **$753.433** |
-| Prestaciones (42%) | | $316.442 |
-| **Total con prestaciones** | | **$1.069.875** |
+| Recargo dominical (domingo, dentro 42 h) | 8,25 | $192.500 |
+| Extra dominical diurna (domingo) | 0,50 | $13.333 |
+| **Recargos sin prestaciones** | | **$735.933** |
+| Prestaciones (42%) | | $309.092 |
+| **Total con prestaciones** | | **$1.045.025** |
 
 ---
 
@@ -275,22 +275,21 @@ minimo
 | Concepto | Horas |
 |----------|-------|
 | Horas semanales | 56,50 |
-| Recargo festivo (jueves, dentro 42 h) | 10,75 |
-| Recargo festivo (viernes, dentro 42 h) | 2,50 |
-| Extra dominical/festiva diurna (viernes) | 7,25 |
+| Recargo festivo (jueves santo) | 10,75 |
+| Recargo festivo (viernes santo, dentro 42 h) | 5,00 |
+| Extra dominical/festiva diurna (viernes) | 4,75 |
 | Extra diurna (sábado) | 9,75 |
 
 ### Recargos semanales
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo festivo (jueves santo) | 10,75 | $170.296 |
-| Recargo festivo (viernes santo) | 2,50 | $39.604 |
-| Extra dominical/festiva diurna (viernes) | 7,25 | $129.963 |
+| Recargo festivo (jueves + viernes santo, dentro 42 h) | 15,75 | $229.806 |
+| Extra dominical/festiva diurna (viernes) | 4,75 | $79.206 |
 | Extra diurna (sábado) | 9,75 | $101.615 |
-| **Recargos sin prestaciones** | | **$436.267** |
-| Prestaciones (42%) | | $183.232 |
-| **Total con prestaciones** | | **$619.499** |
+| **Recargos sin prestaciones** | | **$410.629** |
+| Prestaciones (42%) | | $172.464 |
+| **Total con prestaciones** | | **$583.093** |
 
 ---
 
@@ -434,10 +433,89 @@ viernes 2 mayo: 7-6pm
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Recargo festivo (1 mayo, dentro 42 h) | 10,75 | $170.296 |
+| Recargo festivo (1 mayo, dentro 42 h) | 10,75 | $156.852 |
 | Extra diurna (viernes) | 4,75 | $49.505 |
-| **Recargos sin prestaciones** | | **$219.801** |
-| Prestaciones (42%) | | $92.316 |
-| **Total con prestaciones** | | **$312.117** |
+| **Recargos sin prestaciones** | | **$206.357** |
+| Prestaciones (42%) | | $86.670 |
+| **Total con prestaciones** | | **$293.027** |
 
 > Lun–Mié = 26,25 h. Jueves festivo 10,75 h → total 37 h. Viernes 9,75 h → 46,75 h. Del viernes: 5 h ordinarias diurnas (sin recargo) + 4,75 h extra diurna.
+
+---
+
+## Ejemplo 18 — Karen H2: semana incompleta vs festivo (mayo 2026)
+
+Caso real que expone el error de **proyectar 42 h** o el horario habitual cuando la semana no está completa.
+
+### Entrada del usuario
+
+```
+liquida recargos de karen mayo 2026, horario operativo, gana el minimo
+no trabajó 1 ni 18 de mayo
+semana del 27 abril al 2 mayo: solo trabajó el sabado 2
+semana del 11 al 17 mayo: lun a sab normal
+```
+
+### Horario aplicado: **H2 Operativo**
+
+| Día | Programado | Efectivas |
+|-----|------------|-----------|
+| Lun–vie | 8,00 | 9,00 |
+| Sábado | 5,67 | 5,67 |
+
+Festivos mayo: **1 may** (jue) y **18 may** (lun) — **no laborados**.
+
+---
+
+### Semana 27 abr – 2 may — **INCOMPLETA** (solo sábado)
+
+| Concepto | Valor |
+|----------|-------|
+| Días en scope | Solo sáb 2 may |
+| Jornada exigible | **5,67 h** (programado del sábado; **no** usar 42 h ni lun–vie) |
+| Horas efectivas | 5,67 h |
+| **Horas extra** | **0** |
+
+> **Error común del Gem:** comparar el sábado contra 42 h o contra 34 h “compensadas” por el festivo del 1 mayo. Ese festivo **no aplica** a una semana donde Karen solo debía trabajar el sábado.
+
+| Recargos sin prestaciones | **$0** |
+
+---
+
+### Semana 11 – 17 may — **COMPLETA** (sin festivo en scope)
+
+| Concepto | Horas |
+|----------|-------|
+| Lun–vie (×5) | 45,00 efectivas |
+| Sábado | 5,67 |
+| **Total efectivas** | **50,67** |
+| Jornada exigible | **42,00** |
+| **Extra diurna** | **8,67** |
+
+| Concepto | Horas | Valor COP |
+|----------|-------|-----------|
+| Extra diurna | 8,67 | $90.359 |
+| **Recargos sin prestaciones** | | **$90.359** |
+| Prestaciones (42%) | | $37.951 |
+| **Total con prestaciones** | | **$128.310** |
+
+---
+
+### Semana 12 – 18 may — **COMPLETA** con festivo lun no laborado
+
+Karen debía trabajar lun–sáb (H2). **No trabajó el festivo lunes 18 may.**
+
+| Concepto | Valor |
+|----------|-------|
+| Jornada exigible | 42 − 8,00 = **34,00 h** |
+| Trabajó mar–sáb (4 lv + sáb) | 41,67 h efectivas |
+| **Extra diurna** | **7,67 h** |
+
+| Concepto | Horas | Valor COP |
+|----------|-------|-----------|
+| Extra diurna | 7,67 | $79.937 |
+| **Recargos sin prestaciones** | | **$79.937** |
+| Prestaciones (42%) | | $33.574 |
+| **Total con prestaciones** | | **$113.511** |
+
+> **Error común del Gem:** liquidar 8,67 h extra como si fuera semana sin festivo, o tratar todo el sábado como extra por no “ver” la reducción de exigible.

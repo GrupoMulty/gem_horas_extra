@@ -1,18 +1,16 @@
-# Reglas Nómina Colombia 2026
+# Reglas Nómina Colombia 2026 — Multy
 
-Fuente de verdad para el Gem calculadora de **recargos** (extras, nocturno, dominical/festivo).
+Fuente de verdad para el Gem: **recargos** (extras, nocturno, dominical/festivo).
 
-Vigencia: jornada **42 horas semanales**, recargos **Ley 2466/2025** (desde julio 2026).
+## Alcance
 
-## Alcance del Gem
+**Sí liquida:** horas extra, recargo nocturno, horas dominicales/festivas, prestacional 42% sobre recargos.
 
-Este Gem liquida **por empleado** únicamente:
+**No liquida:** salario base, auxilio de transporte, deducciones (salvo petición explícita).
 
-- Horas extra (diurnas, nocturnas, dominicales/festivas).
-- Recargo nocturno (horas ordinarias en franja 19:00–06:00).
-- Horas dominicales y festivas.
+Puede liquidar **cualquier empleado** aunque no esté en un registro: basta con saber **qué horario de empresa** aplica (`horarios_empresa.md`).
 
-**No calcula:** salario base mensual, auxilio de transporte, deducciones ni horas ordinarias diurnas (ya cubiertas por el salario).
+---
 
 ## Parámetros base
 
@@ -20,151 +18,130 @@ Este Gem liquida **por empleado** únicamente:
 |----------|-------|
 | Salario mínimo 2026 | $1.750.905 COP |
 | Jornada semanal máxima | 42 horas |
-| Jornada mensual referencia | 210 horas |
+| Jornada mensual (divisor) | 210 horas |
 | Factor prestacional | 42% |
 
-## Semana laboral
+Semana calendario: **lunes a domingo**. Festivos: `festivos_colombia_2026.md`.
 
-La semana va de **lunes a domingo** (calendario).
+---
 
-## Festivos
+## Tarifas horarias Multy 2026
 
-Usar la lista de `festivos_colombia_2026.md` (19 festivos). Todo **domingo** también aplica recargo dominical.
+Salario variable: `Hora ordinaria = Salario mensual ÷ 210`, luego aplicar factores.
 
-## Tarifas horarias (salario variable)
+| Concepto | Factor | SMLV |
+|----------|--------|------|
+| Ordinaria | — | $8.338 |
+| Ordinaria nocturna | × 1,35 | $11.256 |
+| Extra diurna | × 1,25 | $10.422 |
+| Extra nocturna | × 1,75 | $14.591 |
+| Dominical/festiva | × 1,75 | $14.591 |
+| Extra dominical/festiva diurna | × 2,00 | $16.675 |
+| Extra dominical/festiva nocturna | × 2,50 | $20.844 |
+
+Franjas: diurna **06:00–19:00** | nocturna **19:00–06:00**.
+
+---
+
+## Horarios de empresa
+
+Usar catálogo en `horarios_empresa.md`. Preguntar: **¿En qué horario trabaja [nombre]?**
+
+Cada horario define:
+- Días laborados
+- Entrada / salida / descansos
+- **Horas programadas** por tipo de día (para exigible y festivos)
+- **Horas efectivas** (tiempo real trabajado)
+
+---
+
+## Jornada ordinaria exigible
+
+Base legal: **42 horas semanales**. Ajuste por festivos **no laborados** en días que el empleado habría trabajado según su horario.
+
+### Semana COMPLETA
+
+Trabajó (o debía trabajar) **todos los días habituales** del horario en esa semana calendario.
 
 ```
-Valor hora ordinaria = Salario mensual ÷ 210
+Jornada exigible = 42 − Σ (horas programadas del festivo NO laborado)
 ```
 
-| Tipo | Recargo | Factor | Ejemplo SMLV |
-|------|---------|--------|--------------|
-| Ordinaria diurna | — | No liquida recargo | — |
-| Ordinaria nocturna | +35% | × 1,35 | $11.256 |
-| Extra diurna | +25% | × 1,25 | $10.422 |
-| Extra nocturna | +75% | × 1,75 | $14.591 |
-| Dominical/festiva | +90% | × 1,90 | $15.842 |
-| Extra dominical/festiva diurna | +115% | × 2,15 | $17.926 |
-| Extra dominical/festiva nocturna | +165% | × 2,65 | $22.095 |
+Ejemplos (horario H2):
+- Festivo lunes no laborado → resta **8 h** → exigible = **34 h**
+- Festivo sábado no laborado → resta **5,67 h** → exigible = **36,33 h**
 
-Valores SMLV de referencia: hora ordinaria **$8.338**.
+Si **trabajó** el festivo → no resta; liquida recargo dominical/festivo.
 
-Si el usuario no indica salario, usar salario mínimo 2026.
+### Semana INCOMPLETA — REGLA CRÍTICA
 
-## Jornada ordinaria
+Solo trabajó **algunos días** de la semana (ej. únicamente un sábado, semana corta, empleado que no vino varios días).
 
-Máximo **42 horas efectivas por semana**. Lo que excede es hora extra.
+```
+Jornada exigible = Σ (horas programadas SOLO de los días que debía trabajar EN ESA semana)
+```
 
-## Franjas horarias
+**Prohibido** en semanas incompletas:
+- Usar 42 h fijas.
+- Proyectar el horario habitual completo (lun–sáb) si esos días **no aplican** esa semana.
+- Tratar todo el sábado como extra por comparar contra 42 h o contra 34 h “compensadas”.
 
-| Franja | Rango |
-|--------|-------|
-| Diurna | 06:00 a 19:00 |
-| Nocturna | 19:00 a 06:00 (cruza medianoche) |
+Ejemplo — solo sábado 2 mayo (festivo vie 1 mayo no laborado):
+- Días en scope: **solo sábado**
+- Exigible = **5,67 h** (programado del sábado)
+- Trabajó 5,67 h → **0 h extra**
 
-## Definiciones
+### Horas extra
 
-### Hora ordinaria diurna (día laboral)
+```
+Horas extra = max(0, horas efectivas trabajadas − jornada exigible)
+```
 
-Hora efectiva dentro de las 42 h semanales, en franja diurna, en día laboral normal.
+Solo hay extra si trabajó **más** de lo acordado/programado para **esa** semana.
 
-**Recargo: $0** — ya incluida en salario base.
+Clasificar extras según franja y si el día es festivo/dominical (árbol abajo).
 
-### Hora ordinaria nocturna (día laboral)
-
-Hora efectiva dentro de las 42 h semanales, en franja nocturna (19:00–06:00), en día laboral normal.
-
-**Recargo nocturno: +35%** → tarifa × 1,35.
-
-### Hora extra (día laboral)
-
-Hora efectiva que supera las 42 horas semanales en día laboral normal:
-
-| Franja | Factor |
-|--------|--------|
-| Diurna | × 1,25 |
-| Nocturna | × 1,75 |
-
-### Hora dominical o festiva
-
-Hora efectiva en **domingo o festivo** que aún no supera las 42 h semanales.
-
-**Recargo: +90%** → tarifa × 1,90.
-
-### Hora extra dominical o festiva
-
-Hora efectiva en **domingo o festivo** que además supera las 42 h semanales:
-
-| Franja | Factor |
-|--------|--------|
-| Diurna | × 2,15 |
-| Nocturna | × 2,65 |
+---
 
 ## Descansos
 
-Descontar del tiempo trabajado:
+Descontar desayuno + almuerzo del tiempo trabajado. Solo importa la **duración total**, no la hora.
 
-- Desayuno (minutos totales)
-- Almuerzo (minutos totales)
+Cruce de medianoche: si salida ≤ entrada, la salida es del día siguiente.
 
-**No importa la hora del descanso**, solo la duración total.
-
-## Cruce de medianoche
-
-Si la salida es menor o igual que la entrada (ej. 21:00 → 06:00), la salida corresponde al **día siguiente**.
-
-## Orden de cálculo
-
-1. Convertir horarios a horas decimales.
-2. Detectar cruce de medianoche.
-3. Descontar descansos → horas efectivas del día.
-4. Clasificar horas efectivas en diurna / nocturna.
-5. Identificar domingo o festivo (`festivos_colombia_2026.md`).
-6. Acumular semana en orden cronológico.
-7. Asignar horas a ordinarias (máx. 42) y extras.
-8. Liquidar recargos según tipo.
-9. Redondear valores monetarios a pesos enteros.
+---
 
 ## Árbol de decisión (recargo)
 
 ```
-¿Es domingo o festivo?
-├─ SÍ → ¿Ya se completaron 42 h ordinarias en la semana?
-│       ├─ NO → Recargo dominical/festivo (× 1,90)
-│       └─ SÍ → ¿Franja nocturna?
-│               ├─ SÍ → Extra dominical/festiva nocturna (× 2,65)
-│               └─ NO → Extra dominical/festiva diurna (× 2,15)
-└─ NO → ¿Supera 42 h semanales?
-        ├─ NO → ¿Franja nocturna (19:00-06:00)?
-        │       ├─ SÍ → Recargo nocturno (× 1,35)
-        │       └─ NO → Sin recargo (ordinaria diurna)
-        └─ SÍ → ¿Franja nocturna?
-                ├─ SÍ → Extra nocturna (× 1,75)
-                └─ NO → Extra diurna (× 1,25)
+¿Es domingo o festivo TRABAJADO?
+├─ SÍ → ¿Supera jornada exigible de la semana?
+│       ├─ NO → Recargo dominical/festivo (× 1,75)
+│       └─ SÍ → Extra dominical diurna (× 2,00) o nocturna (× 2,50)
+└─ NO (día hábil) → ¿Supera jornada exigible?
+        ├─ NO → ¿Franja nocturna? → Recargo nocturno (× 1,35)
+        └─ SÍ → Extra diurna (× 1,25) o nocturna (× 1,75)
 ```
 
-## Carga prestacional
+Una hora → una sola tarifa (no acumular recargos).
 
-Siempre mostrar:
+---
 
-1. **Valor recargos** (sin prestaciones).
-2. **Prestaciones (42%)** sobre recargos.
-3. **Total con prestaciones**.
+## Orden de cálculo
 
-## Redondeo
+1. Identificar horario de empresa (H1–H4 u otro).
+2. Determinar días en scope de la semana (¿completa o incompleta?).
+3. Identificar festivos; preguntar si los trabajó.
+4. Calcular **jornada exigible** (completa vs incompleta).
+5. Calcular horas efectivas por día trabajado.
+6. Clasificar diurna / nocturna.
+7. Separar ordinarias vs extras según exigible.
+8. Liquidar recargos y prestacional 42%.
 
-Valores monetarios a **pesos enteros**. Horas con **2 decimales**.
+---
 
-## Reglas fijas
+## Prestacional
 
-1. Semana laboral: lunes a domingo.
-2. Festivos: lista en `festivos_colombia_2026.md`.
-3. Horas dominicales/festivas dentro de 42 h → recargo dominical (+90%).
-4. Una hora tiene **una sola tarifa** según el árbol (no se acumulan recargos).
-5. Salario: si no se indica → salario mínimo 2026 ($1.750.905).
-6. Valor hora: salario mensual ÷ **210**.
+Siempre mostrar: recargos sin prestaciones | prestaciones 42% | total con prestaciones.
 
-## Referencia normativa
-
-- Ley 2101/2021 — jornada 42 h semanales.
-- Ley 2466/2025 — recargos dominical (+90%), extras dominicales (+115% / +165%), franja nocturna desde las 19:00.
+Redondeo: pesos enteros; horas con 2 decimales.

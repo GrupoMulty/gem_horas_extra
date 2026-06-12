@@ -16,7 +16,8 @@ No incluye salario base, auxilio de transporte ni deducciones.
 
 | Archivo | Propósito |
 |---------|-----------|
-| `reglas_nomina_2026.md` | Definiciones, tarifas, flujo y árbol de decisión |
+| `reglas_nomina_2026.md` | Definiciones, tarifas Multy, jornada exigible (completa/incompleta) |
+| `horarios_empresa.md` | Catálogo de turnos H1–H4 (programadas vs efectivas) |
 | `festivos_colombia_2026.md` | Calendario oficial de 19 festivos 2026 |
 | `calculos.py` | Lógica de referencia en Python |
 | `casos_prueba.md` | Escenarios básicos validados |
@@ -32,19 +33,19 @@ No incluye salario base, auxilio de transporte ni deducciones.
 
 ## Flujo de cálculo
 
-1. Recibir horarios, descansos y salario del empleado.
-2. Calcular horas efectivas (con cruce de medianoche si aplica).
-3. Clasificar en diurna (06:00–19:00) / nocturna (19:00–06:00).
-4. Identificar domingos y festivos.
-5. Acumular semana y separar ordinarias (42 h) de extras.
-6. Liquidar recargos según tipo.
-7. Aplicar prestacional (42%) y presentar desglose.
+1. Identificar **horario de empresa** (H1–H4) o pedir entrada/salida/descansos.
+2. Determinar si la semana es **completa** o **incompleta** (ver `reglas_nomina_2026.md`).
+3. Preguntar si trabajó cada festivo; calcular **jornada exigible**.
+4. Calcular horas efectivas (con cruce de medianoche si aplica).
+5. Clasificar diurna (06:00–19:00) / nocturna (19:00–06:00).
+6. Separar ordinarias de extras según exigible (no usar 42 h fijas en semanas incompletas).
+7. Liquidar recargos según tipo y aplicar prestacional (42%).
 
 ## Uso con Gemini
 
 1. Crear un Gem en [Google AI Studio](https://aistudio.google.com/).
 2. Copiar el contenido de `instrucciones_gem.md` en las instrucciones.
-3. Subir los 5 archivos de conocimiento como adjuntos.
+3. Subir los archivos de conocimiento como adjuntos (`reglas_nomina_2026.md`, `horarios_empresa.md`, `festivos_colombia_2026.md`, `calculos.py`, `casos_prueba.md`, `ejemplos_complejos.md`).
 
 ## Verificar cálculos
 

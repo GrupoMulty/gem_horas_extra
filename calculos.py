@@ -14,9 +14,9 @@ FACTOR_PRESTACIONAL = 0.42
 RECARGO_NOCTURNO = 0.35
 RECARGO_EXTRA_DIURNA = 0.25
 RECARGO_EXTRA_NOCTURNA = 0.75
-RECARGO_DOMINICAL = 0.90
-RECARGO_EXTRA_DOMINICAL_DIURNA = 1.15
-RECARGO_EXTRA_DOMINICAL_NOCTURNA = 1.65
+RECARGO_DOMINICAL = 0.75
+RECARGO_EXTRA_DOMINICAL_DIURNA = 1.00
+RECARGO_EXTRA_DOMINICAL_NOCTURNA = 1.50
 
 FESTIVOS_2026 = {
     "2026-01-01", "2026-01-12", "2026-03-23", "2026-04-02", "2026-04-03",
@@ -159,25 +159,45 @@ def clasificar_diurna_nocturna(
     return ClasificacionDia(horas_efectivas, horas_diurnas, horas_nocturnas)
 
 
-def calcular_horas_semanales(horas_totales: float) -> dict[str, float]:
-    ordinarias = min(horas_totales, JORNADA_SEMANAL)
-    extras = max(horas_totales - JORNADA_SEMANAL, 0)
+def calcular_horas_semanales(
+    horas_totales: float,
+    jornada_exigible: float = JORNADA_SEMANAL,
+) -> dict[str, float]:
+    ordinarias = min(horas_totales, jornada_exigible)
+    extras = max(horas_totales - jornada_exigible, 0)
     return {
         "ordinarias": round(ordinarias, 2),
         "extras": round(extras, 2),
     }
 
 
+def calcular_jornada_exigible(
+    semana_completa: bool,
+    horas_festivos_no_laborados: float = 0.0,
+    horas_programadas_semana_incompleta: float = 0.0,
+) -> float:
+    """
+    Semana completa: 42 h − horas programadas de festivos no laborados.
+    Semana incompleta: suma de horas programadas solo de los días en scope.
+    """
+    if semana_completa:
+        return round(JORNADA_SEMANAL - horas_festivos_no_laborados, 2)
+    return round(horas_programadas_semana_incompleta, 2)
+
+
 def liquidar_semana(
     jornadas: list[Jornada],
     salario_mensual: float = SALARIO_MINIMO,
+    jornada_exigible: float | None = None,
 ) -> LiquidacionSemanal:
     """
     Liquida recargos semanales por empleado: nocturno, dominical/festivo y extras.
-    No incluye salario base de horas ordinarias diurnas.
+    jornada_exigible: tope semanal (42 h completa, o programado en semana incompleta).
     """
     tarifas = calcular_tarifas(salario_mensual)
-    horas_ordinarias_restantes = float(JORNADA_SEMANAL)
+    if jornada_exigible is None:
+        jornada_exigible = float(JORNADA_SEMANAL)
+    horas_ordinarias_restantes = float(jornada_exigible)
     horas_ordinarias_nocturnas = 0.0
     horas_extra_diurnas = 0.0
     horas_extra_nocturnas = 0.0

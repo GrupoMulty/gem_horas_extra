@@ -93,10 +93,10 @@ Parámetros: SMLV **$1.750.905**, jornada **42 h/semana**, divisor **210 h/mes**
 |----------|-------|-----------|
 | Horas semanales | 52,50 | |
 | Horas extra diurnas (vie) | 1,75 | $18.239 |
-| Horas extra dominicales diurnas (dom) | 8,75 | $156.852 |
-| **Recargos sin prestaciones** | | **$175.091** |
-| Prestaciones (42%) | | $73.538 |
-| **Total con prestaciones** | | **$248.629** |
+| Horas extra dominicales diurnas (dom) | 8,75 | $145.909 |
+| **Recargos sin prestaciones** | | **$164.148** |
+| Prestaciones (42%) | | $68.942 |
+| **Total con prestaciones** | | **$233.090** |
 
 > Lun-vie acumulan 43,75 h → 42 h ordinarias + 1,75 h extra diurna el viernes. Domingo completo (8,75 h) es extra dominical diurna.
 
@@ -114,10 +114,10 @@ Parámetros: SMLV **$1.750.905**, jornada **42 h/semana**, divisor **210 h/mes**
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
 | Horas efectivas totales | 24,25 | |
-| Horas dominicales/festivas (20 jul) | 6,75 | $106.930 |
-| **Recargos sin prestaciones** | | **$106.930** |
-| Prestaciones (42%) | | $44.911 |
-| **Total con prestaciones** | | **$151.841** |
+| Horas dominicales/festivas (20 jul) | 6,75 | $98.488 |
+| **Recargos sin prestaciones** | | **$98.488** |
+| Prestaciones (42%) | | $41.365 |
+| **Total con prestaciones** | | **$139.853** |
 
 ---
 
@@ -136,9 +136,9 @@ Parámetros: SMLV **$1.750.905**, jornada **42 h/semana**, divisor **210 h/mes**
 | Ordinaria nocturna (+35%) | $22.500 |
 | Extra diurna (+25%) | $20.833 |
 | Extra nocturna (+75%) | $29.167 |
-| Dominical (+90%) | $31.667 |
-| Extra dominical diurna (+115%) | $35.833 |
-| Extra dominical nocturna (+165%) | $44.167 |
+| Dominical (+75%) | $29.167 |
+| Extra dominical diurna (+100%) | $33.333 |
+| Extra dominical nocturna (+150%) | $41.667 |
 
 ### Recargos semanales
 
