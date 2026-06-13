@@ -443,79 +443,109 @@ viernes 2 mayo: 7-6pm
 
 ---
 
-## Ejemplo 18 — Karen H2: semana incompleta vs festivo (mayo 2026)
+## Ejemplo 18 — Karen H8 · mayo 2026 (caso validado)
 
-Caso real que expone el error de **proyectar 42 h** o el horario habitual cuando la semana no está completa.
+Referencia **gold standard** para liquidación mensual: turno del catálogo + horas reales del usuario, semana calendario por semana, métodos 1–4.
 
 ### Entrada del usuario
 
 ```
-liquida recargos de karen mayo 2026, horario operativo, gana el minimo
-no trabajó 1 ni 18 de mayo
-semana del 27 abril al 2 mayo: solo trabajó el sabado 2
-semana del 11 al 17 mayo: lun a sab normal
+karen trabajo de lunes-viernes de 6:00 a 16:30 con descansos de 1 hora y 30 minutos,
+y el sabado de 6:00 a 12:30 con 1 hora y 20 minutos de descanso.
+su horario es h8 y no trabajo los festivos, es para el mes de mayo.
 ```
 
-### Horario aplicado: **H2 Operativo**
+### Interpretación del Gem
 
-| Día | Programado | Efectivas |
-|-----|------------|-----------|
-| Lun–vie | 8,00 | 9,00 |
-| Sábado | 5,67 | 5,67 |
+| Campo | Valor |
+|-------|-------|
+| Empleado | Karen |
+| Turno | **H8** — Bodega de Distribución Turno 2 (`horarios_empresa.md`) |
+| Periodo | Mes completo **mayo 2026** (01–31 may) |
+| Salario | SMLV $1.750.905 (por defecto) |
+| Festivos no laborados | **1 may** (vie, Día del Trabajo) · **18 may** (lun, Ascensión) |
 
-Festivos mayo: **1 may** (jue) y **18 may** (lun) — **no laborados**.
+**Regla turno vs tiempo real:** H8 del catálogo define **programadas**; lo que describe el usuario define **efectivas** (no redefine el turno).
+
+| Tipo día | Programadas (H8 catálogo) | Efectivas (usuario) | Cálculo efectivas |
+|----------|---------------------------|---------------------|-------------------|
+| Lun–vie | **7,75 h** | **9,00 h** | 6:00–16:30 − 1,5 h descanso |
+| Sábado | **5,25 h** | **5,17 h** | 6:00–12:30 − 1 h 20 m descanso |
 
 ---
 
-### Semana 27 abr – 2 may — **INCOMPLETA** (solo sábado)
+### Desglose por semana calendario
+
+Solo cuentan los días de **mayo** dentro de cada semana (lun–dom).
+
+#### Semana 27 abr – 3 may · Método **4** (incompleta con festivo)
 
 | Concepto | Valor |
 |----------|-------|
-| Días en scope | Solo sáb 2 may |
-| Jornada exigible | **5,67 h** (programado del sábado; **no** usar 42 h ni lun–vie) |
-| Horas efectivas | 5,67 h |
-| **Horas extra** | **0** |
+| Días en scope (mayo) | Vie 1 may (festivo) · Sáb 2 may · Dom 3 may |
+| Jornada exigible | **5,25 h** (solo sáb programado; festivo no laborado no suma) |
+| Horas trabajadas | **5,17 h** (solo sáb) |
+| **Extra diurna** | **0,00 h** |
 
-> **Error común del Gem:** comparar el sábado contra 42 h o contra 34 h “compensadas” por el festivo del 1 mayo. Ese festivo **no aplica** a una semana donde Karen solo debía trabajar el sábado.
-
-| Recargos sin prestaciones | **$0** |
-
----
-
-### Semana 11 – 17 may — **COMPLETA** (sin festivo en scope)
-
-| Concepto | Horas |
-|----------|-------|
-| Lun–vie (×5) | 45,00 efectivas |
-| Sábado | 5,67 |
-| **Total efectivas** | **50,67** |
-| Jornada exigible | **42,00** |
-| **Extra diurna** | **8,67** |
-
-| Concepto | Horas | Valor COP |
-|----------|-------|-----------|
-| Extra diurna | 8,67 | $90.359 |
-| **Recargos sin prestaciones** | | **$90.359** |
-| Prestaciones (42%) | | $37.951 |
-| **Total con prestaciones** | | **$128.310** |
-
----
-
-### Semana 12 – 18 may — **COMPLETA** con festivo lun no laborado
-
-Karen debía trabajar lun–sáb (H2). **No trabajó el festivo lunes 18 may.**
+#### Semana 4 – 10 may · Método **1** (completa)
 
 | Concepto | Valor |
 |----------|-------|
-| Jornada exigible | 42 − 8,00 = **34,00 h** |
-| Trabajó mar–sáb (4 lv + sáb) | 41,67 h efectivas |
-| **Extra diurna** | **7,67 h** |
+| Jornada exigible | **42,00 h** |
+| Horas trabajadas | **50,17 h** (5 × 9,00 lun–vie + 5,17 sáb) |
+| **Extra diurna** | **8,17 h** |
+
+#### Semana 11 – 17 may · Método **1** (completa)
+
+| Concepto | Valor |
+|----------|-------|
+| Jornada exigible | **42,00 h** |
+| Horas trabajadas | **50,17 h** |
+| **Extra diurna** | **8,17 h** |
+
+#### Semana 18 – 24 may · Método **2** (completa con festivo no laborado)
+
+| Concepto | Valor |
+|----------|-------|
+| Festivo | Lun 18 may — no laborado |
+| Jornada exigible | 42 − 7,75 = **34,25 h** |
+| Horas trabajadas | **41,17 h** (4 × 9,00 mar–vie + 5,17 sáb) |
+| **Extra diurna** | **6,92 h** |
+
+#### Semana 25 – 31 may · Método **1** (completa)
+
+| Concepto | Valor |
+|----------|-------|
+| Jornada exigible | **42,00 h** |
+| Horas trabajadas | **50,17 h** |
+| **Extra diurna** | **8,17 h** |
+
+---
+
+### Liquidación del periodo
 
 | Concepto | Horas | Valor COP |
 |----------|-------|-----------|
-| Extra diurna | 7,67 | $79.937 |
-| **Recargos sin prestaciones** | | **$79.937** |
-| Prestaciones (42%) | | $33.574 |
-| **Total con prestaciones** | | **$113.511** |
+| Extra diurna (0 + 8,17 + 8,17 + 6,92 + 8,17) | **31,43** | **$327.459** |
+| **Recargos sin prestaciones** | | **$327.459** |
+| Prestaciones (42%) | | $137.533 |
+| **Total con prestaciones** | | **$464.992** |
 
-> **Error común del Gem:** liquidar 8,67 h extra como si fuera semana sin festivo, o tratar todo el sábado como extra por no “ver” la reducción de exigible.
+Tarifa extra diurna SMLV: $10.422/h (`reglas_nomina_2026.md`).
+
+---
+
+### Puntos clave (por qué esta respuesta es correcta)
+
+1. **Programadas del H8** (7,75 / 5,25) para exigible; **efectivas del usuario** (9,00 / 5,17) para lo trabajado.
+2. **Mes = suma de semanas calendario**, no plantilla agrupada (“3 semanas × X h”).
+3. **Semana 27 abr – 3 may:** solo días de **mayo** en scope → método **4**, exigible **5,25 h** (no restar festivo del 1 may contra 42 h).
+4. **Semana 18–24 may:** método **2** → 42 − 7,75 = 34,25 h exigible.
+5. **Festivos no laborados** no suman programadas ni efectivas; reducen exigible solo en semana **completa** (método 2).
+
+### Errores comunes a evitar
+
+- Tratar el mes entero como “semana habitual” vs “semana con festivo” sin desglose semanal.
+- Usar 9,00 h como programadas porque el usuario las mencionó (son efectivas, no H8 pactado).
+- Incluir lun–jue 28–30 abr en la semana 1 cuando el periodo es **mayo**.
+- Calcular 7,25 h extra en semanas con festivo usando 8 h genéricas en vez de **7,75 h** programadas H8.

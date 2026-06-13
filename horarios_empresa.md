@@ -25,12 +25,13 @@ Por cada turno de Multy documentar:
 Efectivas = (salida − entrada) − descansos
 ```
 
-### Fórmula — horas programadas
+### Horas programadas
 
-No se deducen automáticamente de entrada/salida.
+Las define Multy. Son las que usa el Gem para jornada exigible, semanas incompletas y festivos no laborados. **Siempre deben ser un número** en la tabla del turno (nunca texto ambiguo).
 
-Las define Multy y son las que se utilizarán para:
+Pueden ser distintas a las efectivas del mismo turno (ej. más horas en reloj que las pactadas para exigible).
 
+Usos en nómina:
 - Jornada exigible.
 - Semanas incompletas.
 - Festivos no laborados.
@@ -48,7 +49,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 08:00 – 17:00 | 07:30 – 13:30 |
 | Descanso | 20 min desayuno + 60 min almuerzo | 20 min desayuno |
 | Horas efectivas *(calculadas)* | 7,67 h | 5,67 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,67 h** | **5,67 h** |
 
 **Alias:** `administrativo`, `administrativo 1`, `H1`
 
@@ -64,7 +65,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 08:10 – 17:30 | 07:30 – 15:00 |
 | Descanso | 30 min desayuno + 80 min almuerzo | 30 min desayuno + 30 min almuerzo |
 | Horas efectivas *(calculadas)* | 7,5 h | 6,50 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,50 h** | **6,50 h** |
 
 **Alias:** `administrativo 2`, `H2`
 
@@ -80,7 +81,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 08:00 – 17:30 | 07:10 – 15:00 | 07:30 – 12:30 |
 | Descanso | 30 min desayuno + 90 min almuerzo | 30 min desayuno + 50 min almuerzo | Sin descanso |
 | Horas efectivas *(calculadas)* | 7,50 h | 6,50 h | 5,00 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,50 h** | **6,50 h** | **5,00 h** |
 
 **Alias:** `punto venta 1`, `H3`
 
@@ -96,7 +97,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 07:00 – 16:30 | 07:10 – 15:00 | 07:30 – 12:30 |
 | Descanso | 30 min desayuno + 90 min almuerzo | 30 min desayuno + 50 min almuerzo | Sin descanso |
 | Horas efectivas *(calculadas)* | 7,50 h | 6,50 h | 5,00 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,50 h** | **6,50 h** | **5,00 h** |
 
 **Alias:** `operativo`, `punto venta 2`, `H4`
 
@@ -112,7 +113,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 07:30 – 17:00 | 07:10 – 15:00 | 07:30 – 12:30 |
 | Descanso | 30 min desayuno + 90 min almuerzo | 30 min desayuno + 50 min almuerzo | Sin descanso |
 | Horas efectivas *(calculadas)* | 7,50 h | 6,50 h | 5,00 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,50 h** | **6,50 h** | **5,00 h** |
 
 **Alias:** `punto venta 3`, `H5`
 
@@ -128,7 +129,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 08:30 – 17:30 | 07:10 – 15:00 | 07:30 – 12:30 |
 | Descanso |90 min almuerzo | 30 min desayuno + 50 min almuerzo | Sin descanso |
 | Horas efectivas *(calculadas)* | 7,50 h | 6,50 h | 5,00 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,50 h** | **6,50 h** | **5,00 h** |
 
 **Alias:** `punto venta 6`, `H6`
 
@@ -144,7 +145,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 06:15 – 15:30 | 07:15 – 13:00 |
 | Descanso | 30 min desayuno + 90 min almuerzo | 30 min desayuno |
 | Horas efectivas *(calculadas)* | 7,75 h | 5,25 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,75 h** | **5,25 h** |
 
 **Alias:** `bodega 1`, `H7`
 
@@ -160,7 +161,7 @@ Las define Multy y son las que se utilizarán para:
 | Entrada / salida | 07:15 – 16:30 | 07:15 – 13:00 |
 | Descanso | 30 min desayuno + 60 min almuerzo | 30 min desayuno |
 | Horas efectivas *(calculadas)* | 7,75 h | 5,25 h |
-| **Horas programadas** | **Pendiente RRHH** | **Pendiente RRHH** |
+| **Horas programadas** | **7,75 h** | **5,25 h** |
 
 **Alias:** `bodega 2`, `H8`
 
@@ -176,8 +177,9 @@ Las define Multy y son las que se utilizarán para:
    - Ausencias.
    - Festivos trabajados.
    - Cambios de turno.
-4. Las horas programadas son la base para calcular jornada exigible y festivos.
-5. Las horas efectivas son la base para liquidar recargos.
+4. **Programadas** → jornada exigible, festivos, semanas incompletas.
+5. **Efectivas del catálogo** → referencia del turno pactado; si el usuario reporta otras horas, esas son las **efectivas reales** (no cambian el turno).
+6. Las **efectivas reales** son la base para comparar contra programadas y liquidar recargos.
 
 ## Semanas incompletas
 
