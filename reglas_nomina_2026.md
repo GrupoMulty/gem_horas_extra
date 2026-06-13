@@ -57,39 +57,45 @@ Cada horario define:
 
 ## Jornada ordinaria exigible
 
-Base legal: **42 horas semanales**. Ajuste por festivos **no laborados** en días que el empleado habría trabajado según su horario.
+Base legal: **42 horas semanales** en semana **completa**. Liquidación mensual o quincenal: **semana calendario por semana** (lun–dom), luego sumar. Ver `instrucciones_gem.md` para los **4 métodos**.
 
-### Semana COMPLETA
+| Método | Cuándo | Exigible |
+|--------|--------|----------|
+| **1** | Semana completa | 42 h |
+| **2** | Completa + festivo no laborado | 42 − programadas del festivo |
+| **3** | Incompleta (quincena cortada, días sueltos) | Σ programadas día por día en scope |
+| **4** | Incompleta + festivo en scope | Σ programadas en scope; festivo no laborado no suma |
 
-Trabajó (o debía trabajar) **todos los días habituales** del horario en esa semana calendario.
+Programadas y efectivas por turno → `horarios_empresa.md`. Si el usuario reporta otras horas con un turno indicado, son **efectivas reales**, no cambian las programadas del catálogo.
+
+### Semana COMPLETA (métodos 1 y 2)
+
+Trabajó (o debía trabajar) **todos los días habituales** del turno esa semana calendario.
 
 ```
 Jornada exigible = 42 − Σ (horas programadas del festivo NO laborado)
 ```
 
-Ejemplos (horario H2):
-- Festivo lunes no laborado → resta **8 h** → exigible = **34 h**
-- Festivo sábado no laborado → resta **5,67 h** → exigible = **36,33 h**
+Ejemplos (**H8** — programadas lun–vie 7,75 h · sáb 5,25 h):
+- Festivo lunes no laborado → exigible = 42 − 7,75 = **34,25 h**
+- Festivo sábado no laborado → exigible = 42 − 5,25 = **36,75 h**
+- Sin festivo → **42,00 h**
 
 Si **trabajó** el festivo → no resta; liquida recargo dominical/festivo.
 
-### Semana INCOMPLETA — REGLA CRÍTICA
+### Semana INCOMPLETA (métodos 3 y 4)
 
-Solo trabajó **algunos días** de la semana (ej. únicamente un sábado, semana corta, empleado que no vino varios días).
+Solo algunos días en scope (quincena, mes parcial, días concretos).
 
 ```
-Jornada exigible = Σ (horas programadas SOLO de los días que debía trabajar EN ESA semana)
+Jornada exigible = Σ (programadas del turno, solo días en scope)
 ```
 
-**Prohibido** en semanas incompletas:
-- Usar 42 h fijas.
-- Proyectar el horario habitual completo (lun–sáb) si esos días **no aplican** esa semana.
-- Tratar todo el sábado como extra por comparar contra 42 h o contra 34 h “compensadas”.
+**Prohibido:** usar 42 h; proyectar lun–sáb si no aplican; restar festivo fuera de scope.
 
-Ejemplo — solo sábado 2 mayo (festivo vie 1 mayo no laborado):
-- Días en scope: **solo sábado**
-- Exigible = **5,67 h** (programado del sábado)
-- Trabajó 5,67 h → **0 h extra**
+Ejemplo — **mayo 2026**, semana 27 abr–3 may, scope solo días de mayo (vie festivo + sáb):
+- Exigible = **5,25 h** (solo sáb programado; festivo no laborado no suma)
+- Caso completo validado → `ejemplos_complejos.md` **Ejemplo 18**
 
 ### Horas extra
 
@@ -129,14 +135,13 @@ Una hora → una sola tarifa (no acumular recargos).
 
 ## Orden de cálculo
 
-1. Identificar horario de empresa (H1–H4 u otro).
-2. Determinar días en scope de la semana (¿completa o incompleta?).
-3. Identificar festivos; preguntar si los trabajó.
-4. Calcular **jornada exigible** (completa vs incompleta).
-5. Calcular horas efectivas por día trabajado.
-6. Clasificar diurna / nocturna.
-7. Separar ordinarias vs extras según exigible.
-8. Liquidar recargos y prestacional 42%.
+1. Identificar turno (**H1–H8**) en `horarios_empresa.md`.
+2. Definir periodo (quincena / mes / fechas) y días en scope por semana calendario.
+3. Clasificar cada semana: método **1, 2, 3 o 4**.
+4. Preguntar festivos trabados / no laborados.
+5. Por semana: programadas (catálogo) vs efectivas (usuario si difieren).
+6. Calcular jornada exigible → extras → recargos.
+7. Sumar semanas del periodo; aplicar prestacional 42%.
 
 ---
 

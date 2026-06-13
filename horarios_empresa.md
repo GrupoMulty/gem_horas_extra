@@ -183,11 +183,10 @@ Usos en nómina:
 
 ## Semanas incompletas
 
-Si solo liquidan uno o varios días concretos:
+Si solo liquidan uno o varios días concretos, o una quincena corta una semana calendario:
 
 ```text
-Jornada Exigible =
-Σ Horas Programadas de los días incluidos en el cálculo
+Jornada exigible = Σ horas programadas de los días en scope
 ```
 
-Nunca usar automáticamente 42 horas semanales en semanas incompletas.
+Nunca usar 42 h automáticamente. Ver **Ejemplo 18** en `ejemplos_complejos.md` (Karen · H8 · mayo 2026).

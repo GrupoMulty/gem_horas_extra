@@ -9,7 +9,9 @@ Parámetros: SMLV **$1.750.905**, jornada **42 h/semana**, divisor **210 h/mes**
 
 ---
 
-## Caso 1 — Karen (casi sin recargos)
+## Caso 1 — Karen (escenario básico H1)
+
+> Caso de práctica con horario 07:00–17:00. **Liquidación mensual compleja validada** → `ejemplos_complejos.md` **Ejemplo 18** (Karen · H8 · mayo 2026).
 
 **Empleado:** Karen  
 **Horario:** Lunes a Viernes, 07:00 - 17:00  
